@@ -1,0 +1,63 @@
+[
+    {
+      "Room": {
+        "id": "room1",
+        "type": "public",
+        "category": "music",
+        "isHls":false,
+        "imageurl": "https://example.com/images/room1.png",
+        "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+        "hlsstreamurl": "https://example.com/videos/room1.m3u8"
+      },
+      "Video": {
+        "poster": "https://example.com/images/room1-poster.png",
+        "url": "https://example.com/videos/room1.mp4"
+      }
+    },
+    {
+      "Room": {
+        "id": "room2",
+        "type": "public",
+        "category": "games",
+        "isHls":true,
+        "imageurl": "https://example.com/images/room2.png",
+        "videoUrl": "https://example.com/videos/room2.mp4",
+        "hlsstreamurl": "https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8"
+      },
+      "Video": {
+        "poster": "https://example.com/images/room2-poster.png",
+        "url": "https://example.com/videos/room2.mp4"
+      }
+    },
+    {
+      "Room": {
+        "id": "room3",
+        "type": "public",
+        "category": "sports",
+        "isHls":false,
+        "imageurl": "https://example.com/images/room3.png",
+        "videoUrl": "https://example.com/videos/room3.mp4",
+        "hlsstreamurl": "https://example.com/videos/room3.m3u8"
+      },
+      "Video": {
+        "poster": "https://example.com/images/room3-poster.png",
+        "url": "https://example.com/videos/room3.mp4"
+      }
+    },
+    {
+      "Room": {
+        "id": "room4",
+        "type": "public",
+        "category": "movies",
+        "isHls":false,
+        "imageurl": "https://example.com/images/room4.png",
+        "videoUrl": "https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8",
+        "hlsstreamurl": "https://example.com/videos/room4.m3u8"
+      },
+      "Video": {
+        "poster": "https://example.com/images/room4-poster.png",
+        "url": "https://example.com/videos/room4.mp4"
+      }
+    }
+  ]
+  

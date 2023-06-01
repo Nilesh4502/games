@@ -1,0 +1,60 @@
+{
+    "permissions": {
+        "admin": [{
+                "id": "dashboard",
+                "componentName": "Dashboard",
+                "route": "/dashboard",
+                "title": "Dashboard"
+            },
+            {
+                "id": "users",
+                "componentName": "Users",
+                "route": "/users",
+                "title": "Users"
+            },
+            {
+                "id": "profile",
+                "componentName": "Profile",
+                "route": "/profile",
+                "title": "Profile"
+            },
+            {
+                "id": "settings",
+                "componentName": "Settings",
+                "route": "/settings",
+                "title": "Settings"
+            },
+            {
+                "id": "logout",
+                "componentName": "Logout",
+                "route": "/logout",
+                "title": "Log out"
+            }
+        ],
+        "user": [{
+                "id": "dashboard",
+                "componentName": "Dashboard",
+                "route": "/dashboard",
+                "title": "Dashboard"
+            },
+            {
+                "id": "profile",
+                "componentName": "Profile",
+                "route": "/profile",
+                "title": "Profile"
+            },
+            {
+                "id": "settings",
+                "componentName": "Settings",
+                "route": "/settings",
+                "title": "Settings"
+            },
+            {
+                "id": "logout",
+                "componentName": "Logout",
+                "route": "/logout",
+                "title": "Log out"
+            }
+        ]
+    }
+}

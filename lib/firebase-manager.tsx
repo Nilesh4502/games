@@ -27,8 +27,10 @@ import {
   ref,
   uploadBytesResumable,
   getDownloadURL,
+  uploadBytes,
 } from 'firebase/storage';
 import { getMessaging, getToken, onMessage } from 'firebase/messaging';
+import { Session } from "inspector";
 //
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -77,14 +79,79 @@ function initFirebaseAuth(app) {
   onAuthStateChanged(getAuth(app), authStateObserver);
 }
 
-// Returns the signed-in user's profile Pic URL.
+//Returns the signed-in user's profile Pic URL.
 function getProfilePicUrl() {
   return getAuth(app).currentUser.photoURL || '/images/profile_placeholder.png';
 };
 // Returns the signed-in user's profile Pic URL.
-function updateProfile(file:File, id:string) {
+// function updateProfile(file:File, id:string) {
+//   console.log("update the profile image");
+  
+//   const storage = getStorage();
+//   const storageRef = ref(storage, `profile-pictures/${id}`);
+  
+//   // Upload the file to Firebase Storage
+//   uploadBytes(storageRef, file).then((snapshot)=>{
+//      return getDownloadURL(snapshot.ref);
+//   })
+//   .then((downloadURL)=>{
+    
+//     if(id){
+//     return updateProfile(id, {
+//       photoURL: downloadURL || '',
+//     });
+//   }
+//   else {
+//     throw new Error('User is not signed in.');
+//   }
+//   })
+  
+//   // const storage = getStorage();
+
+  
+//   // const imageRef = ref(storage, 'images/${id}');
+//   // uploadBytes(imageRef,file).then(()=>{
+//   //   alert("uploaded")
+//   // })
+
+
+//   // const storageRef = ref(storage, `files/${file.name}`);
+//   // const uploadTask = uploadBytesResumable(storageRef, file);
+
+//   // uploadTask.on("state_changed",()=>{
+//   //   getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+//   //     return downloadURL;
+//   // })})
+function updateProfile(file, id) {
   console.log("update the profile image");
-  //return getAuth(app).currentUser.photoURL || '/images/profile_placeholder.png';
-};
+
+  const storage = getStorage();
+  const storageRef = ref(storage, `profile-pictures/${id}`);
+
+  // Upload the file to Firebase Storage
+  uploadBytes(storageRef, file)
+    .then((snapshot) => {
+      return getDownloadURL(snapshot.ref);
+    })
+    .then((downloadURL) => {
+      const userRef = doc(db, 'users', id);
+      return updateDoc(userRef, {
+        photoURL: downloadURL || '',
+      });
+    })
+    .then(() => {
+      console.log('Profile image updated successfully.');
+    })
+    .catch((error) => {
+      console.error('Failed to update profile image:', error);
+    });
+}
+
+
+
+
+
+
+
 console.log(`appname ${app.name}  storage ${storage} db ${db}`);
 export {app, db, storage,initFirebaseAuth, getProfilePicUrl,updateProfile};

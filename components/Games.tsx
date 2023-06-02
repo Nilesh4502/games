@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Stack, Card, CardBody, Text, Image, Heading, Box, Flex, Button } from "@chakra-ui/react";
+import { Stack, Card, CardBody, Text, Image, Heading, Box, Flex, Button, SimpleGrid } from "@chakra-ui/react";
 import gameData from "../data/game.json";
 
 interface Game {
@@ -39,26 +39,27 @@ function Games() {
   };
 
   return (
-    <Flex flexWrap="wrap" justifyContent="flex-start">
-      {itemsToShow.map((game) => (
-        <Box key={game.id} maxWidth="700px" m="2">
-          <Card maxW="sm">
-            <CardBody>
-              <Image src={game.img_url} alt={game.name} />
-              <Stack mt="6" spacing="3">
-                <Heading size="md">{game.name}</Heading>
-                <Text>Companyname: {game.company_name}</Text>
-                <Text>price: {game.price}$</Text>
-                <Text>
-                  Rating: <RatingStars rating={game.rating} />
-                </Text>
-              </Stack>
-            </CardBody>
-          </Card>
-        </Box>
-      ))}
-
-<Flex justifyContent="space-between" width="100%" mt="4">
+    <Flex flexWrap="wrap" justifyContent="flex-center">
+      <SimpleGrid spacing={4} columns={4}>
+        {itemsToShow.map((game) => (
+         <Box key={game.id} boxSize="full" m="4" p="4" width="300px">
+            <Card maxW="100%">
+              <CardBody>
+                <Image src={game.img_url} alt={game.name} height="200px" objectFit="cover" />
+                <Stack mt="6" spacing="3">
+                  <Heading size="md">{game.name}</Heading>
+                  <Text>Companyname: {game.company_name}</Text>
+                  <Text>Price: {game.price}$</Text>
+                  <Text>
+                    Rating: <RatingStars rating={game.rating} />
+                  </Text>
+                </Stack>
+              </CardBody>
+            </Card>
+          </Box>
+        ))}
+      </SimpleGrid>
+      <Flex justifyContent="flex-end" width="100%" mt="4">
         {currentPage > 0 && (
           <Button
             colorScheme="teal"
@@ -73,6 +74,7 @@ function Games() {
           <Button
             colorScheme="teal"
             variant="solid"
+            
             onClick={handleNextPage}
           >
             Next Page

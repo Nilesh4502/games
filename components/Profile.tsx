@@ -19,10 +19,14 @@ const Profile = () => {
       try {
         // Call the updateProfile function from firebase.manager.tsx with the file and user ID
        // updateProfile(file, session.user);
+      //  const { user } = session;
+      // await updateProfile(file, user.uid); // Wait for the profile update to complete
 
+      // const downloadURL = await getDownloadURL(ref(storage, `profile-pictures/${user.uid}`));
+      // user.image = downloadURL;
         setImageLoading(false);
         // Refresh the session to fetch updated user data
-        getSession();
+        await getSession();
       } catch (error) {
         setImageLoading(false);
         console.error('Failed to upload profile image:', error);

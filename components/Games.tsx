@@ -1,5 +1,17 @@
 import React, { useState } from "react";
-import { Stack, Card, CardBody, Text, Image, Heading, Box, Flex, Button, SimpleGrid } from "@chakra-ui/react";
+import {
+  Stack,
+  Card,
+  CardBody,
+  Text,
+  Image,
+  Heading,
+  Box,
+  Flex,
+  Button,
+  SimpleGrid,
+  useMediaQuery,
+} from "@chakra-ui/react";
 import gameData from "../data/game.json";
 
 interface Game {
@@ -26,6 +38,8 @@ function Games() {
   const itemsPerPage = 8;
   const gameList = gameData.game;
 
+  const [isLargerThanMobile] = useMediaQuery("(min-width: 768px)");
+
   const startIndex = currentPage * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const itemsToShow = gameList.slice(startIndex, endIndex);
@@ -39,13 +53,22 @@ function Games() {
   };
 
   return (
-    <Flex flexWrap="wrap" justifyContent="flex-center">
-      <SimpleGrid spacing={4} columns={4}>
+    <Flex flexWrap="wrap" justifyContent="center">
+      <SimpleGrid
+        spacing={4}
+        columns={isLargerThanMobile ? 4 : 2}
+        width={isLargerThanMobile ? "80%" : "100%"}
+      >
         {itemsToShow.map((game) => (
-         <Box key={game.id} boxSize="full" m="4" p="4" width="300px">
+          <Box key={game.id} m="4" p="4" width="100%">
             <Card maxW="100%">
+              <Image
+                src={game.img_url}
+                alt={game.name}
+                height="200px"
+                objectFit="cover"
+              />
               <CardBody>
-                <Image src={game.img_url} alt={game.name} height="200px" objectFit="cover" />
                 <Stack mt="6" spacing="3">
                   <Heading size="md">{game.name}</Heading>
                   <Text>Companyname: {game.company_name}</Text>
@@ -59,12 +82,13 @@ function Games() {
           </Box>
         ))}
       </SimpleGrid>
-      <Flex justifyContent="flex-end" width="100%" mt="4">
+      <Flex justifyContent="center" width="100%" mt="4">
         {currentPage > 0 && (
           <Button
             colorScheme="teal"
             variant="solid"
             onClick={handlePreviousPage}
+            mr="2"
           >
             Previous Page
           </Button>
@@ -74,8 +98,8 @@ function Games() {
           <Button
             colorScheme="teal"
             variant="solid"
-            
             onClick={handleNextPage}
+            ml="2"
           >
             Next Page
           </Button>

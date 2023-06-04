@@ -4,29 +4,19 @@
         "id": "room1",
         "type": "public",
         "category": "music",
-        "isHls":false,
-        "imageurl": "https://example.com/images/room1.png",
-        "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+        "imageurl": "https://via.placeholder.com/500",
+        "videoUrl": "https://example.com/videos/video1.mp4",
         "hlsstreamurl": "https://example.com/videos/room1.m3u8"
-      },
-      "Video": {
-        "poster": "https://example.com/images/room1-poster.png",
-        "url": "https://example.com/videos/room1.mp4"
       }
-    },
+   },
     {
       "Room": {
         "id": "room2",
         "type": "public",
         "category": "games",
-        "isHls":true,
         "imageurl": "https://example.com/images/room2.png",
         "videoUrl": "https://example.com/videos/room2.mp4",
         "hlsstreamurl": "https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8"
-      },
-      "Video": {
-        "poster": "https://example.com/images/room2-poster.png",
-        "url": "https://example.com/videos/room2.mp4"
       }
     },
     {
@@ -34,14 +24,9 @@
         "id": "room3",
         "type": "public",
         "category": "sports",
-        "isHls":false,
         "imageurl": "https://example.com/images/room3.png",
         "videoUrl": "https://example.com/videos/room3.mp4",
         "hlsstreamurl": "https://example.com/videos/room3.m3u8"
-      },
-      "Video": {
-        "poster": "https://example.com/images/room3-poster.png",
-        "url": "https://example.com/videos/room3.mp4"
       }
     },
     {
@@ -49,14 +34,213 @@
         "id": "room4",
         "type": "public",
         "category": "movies",
-        "isHls":false,
         "imageurl": "https://example.com/images/room4.png",
-        "videoUrl": "https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8",
+        "videoUrl": "https://example.com/videos/video4.mp4",
         "hlsstreamurl": "https://example.com/videos/room4.m3u8"
-      },
-      "Video": {
-        "poster": "https://example.com/images/room4-poster.png",
-        "url": "https://example.com/videos/room4.mp4"
+      }
+    },
+    {
+      "Room": {
+        "id": "room5",
+        "type": "public",
+        "category": "movies",
+        "imageurl": "https://example.com/images/room5.png",
+        "videoUrl": "https://example.com/videos/video2.mp4",
+        "hlsstreamurl": "https://example.com/videos/room5.m3u8"
+      }
+    },
+
+    {
+      "Room": {
+        "id": "room6",
+        "type": "public",
+        "category": "movies",
+        "imageurl": "https://example.com/images/room6.png",
+        "videoUrl": "https://example.com/videos/video3.mp4",
+        "hlsstreamurl": "https://example.com/videos/room6.m3u8"
+      }
+    },
+    {
+      "Room": {
+        "id": "room7",
+        "type": "public",
+        "category": "music",
+        "imageurl": "https://via.placeholder.com/600",
+        "videoUrl": "https://example.com/videos/video7.mp4",
+        "hlsstreamurl": "https://example.com/videos/room7.m3u8"
+      }
+   },
+    {
+      "Room": {
+        "id": "room8",
+        "type": "public",
+        "category": "games",
+        "imageurl": "https://example.com/images/room8.png",
+        "videoUrl": "https://example.com/videos/room8.mp4",
+        "hlsstreamurl": "https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8"
+      }
+    },
+    {
+      "Room": {
+        "id": "room9",
+        "type": "public",
+        "category": "sports",
+        "imageurl": "https://example.com/images/room9.png",
+        "videoUrl": "https://example.com/videos/room9.mp4",
+        "hlsstreamurl": "https://example.com/videos/room9.m3u8"
+      }
+    },
+    {
+      "Room": {
+        "id": "room10",
+        "type": "public",
+        "category": "movies",
+        "imageurl": "https://example.com/images/room10.png",
+        "videoUrl": "https://example.com/videos/room10.mp4",
+        "hlsstreamurl": "https://example.com/videos/room10.m3u8"
+      }
+    },
+    {
+      "Room": {
+        "id": "room11",
+        "type": "public",
+        "category": "movies",
+        "imageurl": "https://example.com/images/room11.png",
+        "videoUrl": "https://example.com/videos/video11.mp4",
+        "hlsstreamurl": "https://example.com/videos/room11.m3u8"
+      }
+    },
+
+    {
+      "Room": {
+        "id": "room12",
+        "type": "public",
+        "category": "movies",
+        "imageurl": "https://example.com/images/room12.png",
+        "videoUrl": "https://example.com/videos/video12.mp4",
+        "hlsstreamurl": "https://example.com/videos/room12.m3u8"
+      }
+    },
+    {
+      "Room": {
+        "id": "room13",
+        "type": "public",
+        "category": "music",
+        "imageurl": "https://via.placeholder.com/900",
+        "videoUrl": "https://example.com/videos/video13.mp4",
+        "hlsstreamurl": "https://example.com/videos/room13.m3u8"
+      }
+   },
+    {
+      "Room": {
+        "id": "room14",
+        "type": "public",
+        "category": "games",
+        "imageurl": "https://example.com/images/room14.png",
+        "videoUrl": "https://example.com/videos/room14.mp4",
+        "hlsstreamurl": "https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8"
+      }
+    },
+    {
+      "Room": {
+        "id": "room15",
+        "type": "public",
+        "category": "sports",
+        "imageurl": "https://example.com/images/room15.png",
+        "videoUrl": "https://example.com/videos/room15.mp4",
+        "hlsstreamurl": "https://example.com/videos/room15.m3u8"
+      }
+    },
+    {
+      "Room": {
+        "id": "room16",
+        "type": "public",
+        "category": "movies",
+        "imageurl": "https://example.com/images/room16.png",
+        "videoUrl": "https://example.com/videos/video16.mp4",
+        "hlsstreamurl": "https://example.com/videos/room16.m3u8"
+      }
+    },
+    {
+      "Room": {
+        "id": "room17",
+        "type": "public",
+        "category": "movies",
+        "imageurl": "https://example.com/images/room17.png",
+        "videoUrl": "https://example.com/videos/video17.mp4",
+        "hlsstreamurl": "https://example.com/videos/room17.m3u8"
+      }
+    },
+
+    {
+      "Room": {
+        "id": "room18",
+        "type": "public",
+        "category": "movies",
+        "imageurl": "https://example.com/images/room18.png",
+        "videoUrl": "https://example.com/videos/video18.mp4",
+        "hlsstreamurl": "https://example.com/videos/room18.m3u8"
+      }
+    },
+    {
+      "Room": {
+        "id": "room19",
+        "type": "public",
+        "category": "music",
+        "imageurl": "https://via.placeholder.com/800",
+        "videoUrl": "https://example.com/videos/video19.mp4",
+        "hlsstreamurl": "https://example.com/videos/room19.m3u8"
+      }
+   },
+    {
+      "Room": {
+        "id": "room20",
+        "type": "public",
+        "category": "games",
+        "imageurl": "https://example.com/images/room20.png",
+        "videoUrl": "https://example.com/videos/room20.mp4",
+        "hlsstreamurl": "https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8"
+      }
+    },
+    {
+      "Room": {
+        "id": "room21",
+        "type": "public",
+        "category": "sports",
+        "imageurl": "https://example.com/images/room21.png",
+        "videoUrl": "https://example.com/videos/room21.mp4",
+        "hlsstreamurl": "https://example.com/videos/room21.m3u8"
+      }
+    },
+    {
+      "Room": {
+        "id": "room22",
+        "type": "public",
+        "category": "movies",
+        "imageurl": "https://example.com/images/room22.png",
+        "videoUrl": "https://example.com/videos/room22.mp4",
+        "hlsstreamurl": "https://example.com/videos/room22.m3u8"
+      }
+    },
+    {
+      "Room": {
+        "id": "room23",
+        "type": "public",
+        "category": "movies",
+        "imageurl": "https://example.com/images/room23.png",
+        "videoUrl": "https://example.com/videos/video23.mp4",
+        "hlsstreamurl": "https://example.com/videos/room23.m3u8"
+      }
+    },
+
+    {
+      "Room": {
+        "id": "room24",
+        "type": "public",
+        "category": "movies",
+        "imageurl": "https://example.com/images/room24.png",
+        "videoUrl": "https://example.com/videos/video24.mp4",
+        "hlsstreamurl": "https://example.com/videos/room24.m3u8"
       }
     }
   ]

@@ -27,6 +27,9 @@ const Header = memo(() => {
   const handleSignInClick = () => {
     router.push("/signin");
   };
+  const handleClick=()=>{
+    router.push("/Room");
+  };
 
   useEffect(() => {
     console.log("in use effect for header component",status , session);
@@ -51,22 +54,27 @@ const Header = memo(() => {
           </Box>
 
           <Box
-            display={{ base: isOpen ? "block" : "none", md: "block" }}
-            mt={{ base: 4, md: 0 }}
-          >
-            {status === "loading" ? (
-              console.log("Status is loading"),
-              <Spinner size="sm" />
-            ) : (status==="unauthenticated" || (!session)) ? (
-              console.log("Session is null or undefined",session, status),
+          display={{ base: isOpen ? "block" : "none", md: "block" }}
+          mt={{ base: 4, md: 0 }}
+        >
+          {status === "loading" ? (
+            console.log("Status is loading"),
+            <Spinner size="sm" />
+          ) : (status === "unauthenticated" || !session) ? (
+            console.log("Session is null or undefined", session, status),
+            <>
               <Button colorScheme="blue" size="sm" onClick={handleSignInClick}>
                 Sign In
               </Button>
-            ) : (
-              console.log("Session is available",session, status),
-              <Dropdown options={Permissions.permissions.user} />
-            )}
-          </Box>
+              <Button colorScheme="blue" size="sm" padding="10px"  margin="5px" onClick={handleClick}>
+                Room
+              </Button>
+            </>
+          ) : (
+            console.log("Session is available", session, status),
+            <Dropdown options={Permissions.permissions.user} />
+          )}
+        </Box>
         </Flex>
       </Box>
     </Box>

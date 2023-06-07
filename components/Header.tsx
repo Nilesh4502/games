@@ -11,6 +11,17 @@ import {
   Image,
   Spinner,
 } from "@chakra-ui/react";
+import { ChevronDownIcon } from "@chakra-ui/icons";
+import {
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuItemOption,
+  MenuGroup,
+  MenuOptionGroup,
+  MenuDivider,
+} from '@chakra-ui/react'
 import { HamburgerIcon } from "@chakra-ui/icons";
 import Logo from "./Logo";
 import { useSession } from "next-auth/react";
@@ -27,9 +38,7 @@ const Header = memo(() => {
   const handleSignInClick = () => {
     router.push("/signin");
   };
-  const handleClick=()=>{
-    router.push("/Room");
-  };
+  
 
   useEffect(() => {
     console.log("in use effect for header component",status , session);
@@ -63,12 +72,20 @@ const Header = memo(() => {
           ) : (status === "unauthenticated" || !session) ? (
             console.log("Session is null or undefined", session, status),
             <>
-              <Button colorScheme="blue" size="sm" onClick={handleSignInClick}>
-                Sign In
-              </Button>
-              <Button colorScheme="blue" size="sm" padding="10px"  margin="5px" onClick={handleClick}>
-                Room
-              </Button>
+              
+              <Menu>
+             <MenuButton as={Button} leftIcon={<ChevronDownIcon />}>
+              Actions
+             </MenuButton>
+             <MenuList>
+              <MenuItem onClick={handleSignInClick }>Sign in </MenuItem>
+             <MenuItem onClick={()=>{router.push("/Room")}}>Room</MenuItem>
+             <MenuItem onClick={()=>{router.push("/data")}}>user entry</MenuItem>
+             <MenuItem onClick={()=>{router.push("/Details")}}>user details</MenuItem>
+              
+            </MenuList>
+            </Menu>
+              
             </>
           ) : (
             console.log("Session is available", session, status),

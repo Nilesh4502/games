@@ -11,6 +11,17 @@ import {
   Image,
   Spinner,
 } from "@chakra-ui/react";
+import { ChevronDownIcon } from "@chakra-ui/icons";
+import {
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuItemOption,
+  MenuGroup,
+  MenuOptionGroup,
+  MenuDivider,
+} from '@chakra-ui/react'
 import { HamburgerIcon } from "@chakra-ui/icons";
 import Logo from "./Logo";
 import { useSession } from "next-auth/react";
@@ -27,6 +38,7 @@ const Header = memo(() => {
   const handleSignInClick = () => {
     router.push("/signin");
   };
+  
 
   useEffect(() => {
     console.log("in use effect for header component",status , session);
@@ -51,22 +63,35 @@ const Header = memo(() => {
           </Box>
 
           <Box
-            display={{ base: isOpen ? "block" : "none", md: "block" }}
-            mt={{ base: 4, md: 0 }}
-          >
-            {status === "loading" ? (
-              console.log("Status is loading"),
-              <Spinner size="sm" />
-            ) : (status==="unauthenticated" || (!session)) ? (
-              console.log("Session is null or undefined",session, status),
-              <Button colorScheme="blue" size="sm" onClick={handleSignInClick}>
-                Sign In
-              </Button>
-            ) : (
-              console.log("Session is available",session, status),
-              <Dropdown options={Permissions.permissions.user} />
-            )}
-          </Box>
+          display={{ base: isOpen ? "block" : "none", md: "block" }}
+          mt={{ base: 4, md: 0 }}
+        >
+          {status === "loading" ? (
+            console.log("Status is loading"),
+            <Spinner size="sm" />
+          ) : (status === "unauthenticated" || !session) ? (
+            console.log("Session is null or undefined", session, status),
+            <>
+              
+              <Menu>
+             <MenuButton as={Button} leftIcon={<ChevronDownIcon />}>
+              Actions
+             </MenuButton>
+             <MenuList>
+              <MenuItem onClick={handleSignInClick }>Sign in </MenuItem>
+             <MenuItem onClick={()=>{router.push("/Room")}}>Room</MenuItem>
+             <MenuItem onClick={()=>{router.push("/data")}}>user entry</MenuItem>
+             <MenuItem onClick={()=>{router.push("/Details")}}>user details</MenuItem>
+              
+            </MenuList>
+            </Menu>
+              
+            </>
+          ) : (
+            console.log("Session is available", session, status),
+            <Dropdown options={Permissions.permissions.user} />
+          )}
+        </Box>
         </Flex>
       </Box>
     </Box>

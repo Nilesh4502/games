@@ -18,10 +18,10 @@ export default function Signin() {
     } = useSession();
     console.log("signin session data from usesession hook", session);
 
-    const handleSignIn = async(e: React.MouseEvent<HTMLButtonElement>) => {
+    const handleSignIn = async(e) => {
         try {
-        console.log("sign in the user ");
-      //  await signIn();
+        // console.log("sign in the user ");
+        // await signIn();
         await signIn(undefined, { callbackUrl: '/dashboard' })
         console.log('New route:', router.pathname);
     }catch(error){
@@ -32,10 +32,12 @@ export default function Signin() {
 
     };
     const handleSignOut = async(e: React.MouseEvent<HTMLButtonElement>) => {
-        //    e.preventDefault();
-        console.log("sign OUT  the user ");
-        const data = await signOut({redirect: false, callbackUrl: "/"})
-        router.push(data.url)
+       e.preventDefault();
+        // console.log("sign OUT  the user ");
+        // const data = await signOut({redirect: false, callbackUrl: "/"})
+        // router.push(data.url)
+        await signOut();
+            router.push('/');
 
 
     };

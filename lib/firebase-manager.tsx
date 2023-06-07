@@ -31,6 +31,9 @@ import {
 } from 'firebase/storage';
 import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 import { Session } from "inspector";
+import { getDatabase } from "firebase/database";
+
+
 //
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -49,6 +52,8 @@ console.log("auth", getAuth(app).currentUser)
 const db = getFirestore(app);
 //console.log("firestore instance ", db.toJSON());
 const storage = getStorage(app);
+
+
 
 // Returns the signed-in user's display name.
 function getUserName(app) {
@@ -147,6 +152,8 @@ function updateProfile(file, id) {
     });
 }
 
+const fireDb = getDatabase(app);
+
 
 
 
@@ -154,4 +161,5 @@ function updateProfile(file, id) {
 
 
 console.log(`appname ${app.name}  storage ${storage} db ${db}`);
-export {app, db, storage,initFirebaseAuth, getProfilePicUrl,updateProfile};
+export default fireDb;
+export {app, db,storage,initFirebaseAuth, getProfilePicUrl,updateProfile};

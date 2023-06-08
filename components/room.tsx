@@ -84,6 +84,7 @@ function RoomComponent() {
 
   return (
     <div>
+      
         <Menu>
       <MenuButton as={Button} colorScheme='blue' padding="10px" margin="10px" rightIcon={<ChevronDownIcon />}>
         Filter

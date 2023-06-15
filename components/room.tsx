@@ -9,7 +9,7 @@ import {
   Box,
   Flex,
 } from "@chakra-ui/react";
-import roomData from "../data/rooms.json";
+// import roomData from "../data/rooms.json";
 import { useRouter } from "next/router";
 import {
   Menu,
@@ -28,20 +28,49 @@ import {
 } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 
-interface Room {
-  id: string;
-  type: string;
-  category: string;
-  imageUrl: string;
-  videoUrl: string;
-  hlsstreamurl: string;
+// interface Room {
+//   id: string;
+//   type: string;
+//   category: string;
+//   imageUrl: string;
+//   videoUrl: string;
+//   hlsstreamurl: string;
+// }
+async function getData() {
+ 
+  const res = await fetch(`http://localhost:5000/rooms`);
+  if (!res.ok) {
+    throw new Error('Failed to fetch data');
+  }
+
+  const roomData = await res.json();
+  return roomData;
 }
+
+
+
 
 function RoomComponent() {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const router = useRouter();
   const [numRooms, setNumRooms] = useState(4);
+  const [ data, setData ]=useState(null);
   const roomContainerRef = useRef(null);
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const roomData = await getData();
+        setData(roomData);
+      } catch (error) {
+        console.log('Error fetching weather data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
 
   useEffect(() => {
     const handleScroll = (entries) => {
@@ -115,13 +144,15 @@ function RoomComponent() {
           columns={isLargerThanMobile ? 4 : 2}
           width={isLargerThanMobile ? "80%" : "100%"}
         >
-          {roomData
-            .filter((item) =>
-            selectedCategories.length === 0 ||
-            selectedCategories.includes(item.Room.category)
-          )
-            .slice(0, numRooms)
-            .map((item) => (
+           { data &&
+            data
+              .filter(
+                (item) =>
+                  selectedCategories.length === 0 ||
+                  selectedCategories.includes(item.Room.category)
+              )
+              .slice(0, numRooms)
+              .map((item) => ((
               <Box key={item.Room.id} m="4" p="4" width="100%">
                 <Card maxW="100%">
                   <Image
@@ -140,12 +171,12 @@ function RoomComponent() {
                   </CardBody>
                 </Card>
               </Box>
-            ))}
-        </SimpleGrid>
-      </Flex>
-      <div ref={roomContainerRef}></div>
-    </div>
-  );
+             )))}
+             </SimpleGrid>
+           </Flex>
+           <div ref={roomContainerRef}></div>
+         </div>
+       );
 }
 
 export default RoomComponent;

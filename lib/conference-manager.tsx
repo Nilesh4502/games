@@ -12,6 +12,7 @@ import {
     collection,
     addDoc,
     increment,
+    getDoc,
     query,
     orderBy,
     limit,
@@ -113,4 +114,56 @@ async function conferenceRole(role) {
         canView: role.view
     })
     
+}
+async function conferenceRoleData(){
+    const docRef=doc(collection(db,"conferenceRole"));
+    const PermissionRef=doc(collection(docRef,"permission"));
+
+    const dataSnapshot=await getDoc(docRef);
+    const permissionSnapshot=await getDoc(PermissionRef);
+
+    const data=dataSnapshot.data();
+    const permission=permissionSnapshot.data();
+
+    return{
+        data,
+        permission
+    };
+}
+
+async function conference_data(){
+        const docRef=doc(collection(db,"conference"));
+        const activityRef=doc(collection(docRef,"ConferenceActivity"));
+        const ownerIdRef=doc(collection(docRef,"ownerid"));
+        const participantsLeftRef=doc(collection(docRef,"participantsLeft"));
+        const participantsJointRef=doc(collection(docRef,"participantsJoint"));
+        const participantRef=doc(collection(docRef,"paricipants"));
+        const roleRef=doc(collection(participantRef,"Role"));
+
+
+        const conferenceDataSnapshot = await getDoc(docRef);
+        const activityDataSnapshot = await getDoc(activityRef);
+        const ownerDataSnapshot = await getDoc(ownerIdRef);
+        const participantsLeftDataSnapshot = await getDoc(participantsLeftRef);
+        const participantsJointDataSnapshot = await getDoc(participantsJointRef);
+        const participantDataSnapshot = await getDoc(participantRef);
+        const roleDataSnapshot = await getDoc(roleRef);
+    
+        const conferenceData = conferenceDataSnapshot.data();
+        const activityData = activityDataSnapshot.data();
+        const ownerData = ownerDataSnapshot.data();
+        const participantsLeftData = participantsLeftDataSnapshot.data();
+        const participantsJointData = participantsJointDataSnapshot.data();
+        const participantData = participantDataSnapshot.data();
+        const roleData = roleDataSnapshot.data();
+    
+        return {
+          conferenceData,
+          activityData,
+          ownerData,
+          participantsLeftData,
+          participantsJointData,
+          participantData,
+          roleData,
+        };
 }

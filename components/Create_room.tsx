@@ -116,13 +116,13 @@ function RoomComponent() {
     navigator.geolocation.getCurrentPosition(
       async (position) => {
         const { latitude, longitude } = position.coords;
-        setLat(latitude);
-        setLong(longitude);
+        setLat(latitude.toString());
+        setLong(longitude.toString());
         const key = process.env.NEXT_PUBLIC_MAP_API_KEY;
 
         try {
           // Retrieve location details based on coordinates using fetch
-          const response = await fetch(`https://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=b3a3af9d0d89a6c06b2fe864a0558396`);
+          const response = await fetch(`https://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=${key}`);
           const data = await response.json();
 
           if (data.length > 0) {

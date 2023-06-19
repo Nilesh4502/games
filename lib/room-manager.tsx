@@ -1,5 +1,4 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
-import {getFirebaseConfig} from "./firebase-config";
 import {
     getAuth,
     onAuthStateChanged,
@@ -21,6 +20,8 @@ import {
     getDoc,
     serverTimestamp,
   } from 'firebase/firestore';
+  import { useRouter } from 'next/router';
+  import {useToast} from '@chakra-ui/react';
   import {
     getStorage,
     ref,
@@ -31,72 +32,73 @@ import {
   import { getMessaging, getToken, onMessage } from 'firebase/messaging';
   import { Session } from "inspector";
   import { getDatabase } from "firebase/database";
-
-  const firebaseConfig = getFirebaseConfig();
-
-  const app = getApps.length >0 ?getApp() : initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
-
-
-  async function createRoom(state) {
-    try {
-      const docRef=collection(db,"rooms");
-      const geoRef = collection(db, "rooms", "geoDetails");
-      const addressRef = collection(geoRef, "address");
-      const activationRef = collection(db, "rooms","ActivationDetails");
-      const deactivateRef = collection(activationRef, "Deactivated");
-      const roomMetaRef=collection(docRef,"roomMeta")
-      const ownerId=collection(docRef,"ownerId")
-
-
-      await addDoc(roomMetaRef,{
-        isPublic: true
-      })
-      await addDoc(ownerId,{
-        id:state.id
-      })
+  import { app } from "./firebase-config"
 
   
-      await addDoc(activationRef, {
-        activatedby: state.activatedby,
-        activationTimeStamp: serverTimestamp(),
-        isLive: true,
-        isBanned: false
-      });
-  
-      await addDoc(deactivateRef, {
-        deactivatedby: state.deactivatedby,
-        deactivatedtimestamp: serverTimestamp(),
-      });
-      await addDoc(geoRef,{
-          location: state.location
-      })
-      await addDoc(addressRef,{
-            city: state.city,
-            state: state.state,
-            country: state.country
-      })
-      await addDoc(docRef,{
-        creationDate: state.date,
-        girfUrl: state.gif,
-        imageUrl: state.img,
-        isLive:false,
-        room_ctg:state.ctg,
-        roomId:state.id,
-        roomname:state.name
+
+const db = getFirestore(app);
 
 
-      })
-      
-    } catch (error) {
-      // Handle the error appropriately
-    }
+export async function createRoom(State) {
+  try {
+    console.log("okk");
+    const docRef = collection(db, 'rooms');
+    const roomDocRef = doc(docRef, State.id);
+    const geoDetailsRef = collection(roomDocRef, 'geoDetails');
+    const addressRef = doc(geoDetailsRef, 'address');
+    const activationRef = collection(roomDocRef, 'ActivationDetails');
+    const deactivateRef = collection(activationRef, 'Deactivated');
+    const roomMetaRef = collection(roomDocRef, 'roomMeta');
+    const ownerIdRef = collection(roomDocRef, 'ownerId');
+
+    await addDoc(roomMetaRef, {
+      isPublic: true
+    });
+
+    await addDoc(ownerIdRef, {
+      id: "id"
+    });
+
+    await addDoc(activationRef, {
+      activatedby: "activatedby",
+      activationTimeStamp: serverTimestamp(),
+      isLive: true,
+      isBanned: false
+    });
+
+    await addDoc(deactivateRef, {
+      deactivatedby: "deactivatedby",
+      deactivatedtimestamp: serverTimestamp(),
+    });
+
+    await addDoc(geoDetailsRef, {
+      location: "location"
+    });
+
+    await setDoc(addressRef, {
+      city: "city",
+      state: "state",
+      country: "country"
+    });
+
+    await addDoc(docRef, {
+      creationDate: "date",
+      gifUrl: "gif",
+      imageUrl: "https://picsum.photos/id/33/200/300",
+      isLive: false,
+      room_ctg: "ctg",
+      roomId: State.id,
+      roomname: State.name
+    });
+
+    console.log('Document created with ID:', docRef.id);
+  } catch (error) {
+    console.error('Error creating document:', error);
   }
-  
+}
   
 
-function roomCategory(category){
+  export  function roomCategory(category){
     const docRef=addDoc(collection(db,"roomCtgr"),{
        ctg_desc:category.desc  ,
        ctg_id:category.id,
@@ -113,12 +115,12 @@ function roomCategory(category){
 // function updateRoom(){
 
 // }
-async function category_data(){
+export  async function category_data(){
    const categoryData=await getDoc(doc(collection(db,"roomCtgr")));
    return categoryData.data();
 }
 
-async function room_data(){
+export async function room_data(){
   const docRef = doc(collection(db, "rooms"));
   const geoRef = doc(collection(db, "rooms", "geoDetails"));
   const addressRef = doc(collection(geoRef, "address"));

@@ -1,5 +1,5 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
-import {getFirebaseConfig} from "./firebase-config";
+
 import {
     getAuth,
     onAuthStateChanged,
@@ -32,10 +32,8 @@ import {
   import { getMessaging, getToken, onMessage } from 'firebase/messaging';
   import { Session } from "inspector";
   import { getDatabase } from "firebase/database";
-
-  const firebaseConfig = getFirebaseConfig();
-
-  const app = getApps.length >0 ?getApp() : initializeApp(firebaseConfig);
+  import {app} from "./firebase-config"
+  
   const db = getFirestore(app);
 
 async function conferance(conference) {

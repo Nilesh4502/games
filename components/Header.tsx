@@ -12,6 +12,7 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
+
 import {
   Menu,
   MenuButton,
@@ -61,18 +62,19 @@ const Header = memo(() => {
               onClick={onOpen}
             />
           </Box>
-
+         
           <Box
           display={{ base: isOpen ? "block" : "none", md: "block" }}
           mt={{ base: 4, md: 0 }}
         >
+          
           {status === "loading" ? (
             console.log("Status is loading"),
             <Spinner size="sm" />
           ) : (status === "unauthenticated" || !session) ? (
             console.log("Session is null or undefined", session, status),
             <>
-              
+               
               <Menu>
              <MenuButton as={Button} leftIcon={<ChevronDownIcon />}>
               Actions
@@ -82,9 +84,13 @@ const Header = memo(() => {
              <MenuItem onClick={()=>{router.push("/Room")}}>Room</MenuItem>
              <MenuItem onClick={()=>{router.push("/data")}}>user entry</MenuItem>
              <MenuItem onClick={()=>{router.push("/Details")}}>user details</MenuItem>
-              
+             <MenuItem onClick={()=>{router.push("/Roomcreate")}}>Room create</MenuItem>
+             
             </MenuList>
             </Menu>
+            
+              
+              
               
             </>
           ) : (

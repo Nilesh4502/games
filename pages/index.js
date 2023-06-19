@@ -4,7 +4,9 @@ import Header from "../components/Header";
 import Banner from "../components/Banner";
 import Accordion from "../components/Accordion";
 import Footer from "../components/Footer";
-import Games from "../components/Games"
+import Games from "../components/Games";
+
+
 
 const Index = () => {
   return (
@@ -12,11 +14,12 @@ const Index = () => {
       <Header />
      <Container maxW="container.xl" px={[4, 6, 10]} py={8}>
         {/* <Banner /> */}
+       
         <Games />
         <Accordion />
       </Container>
-      <Footer /> 
-    </Box>
+      < Footer /> 
+     </Box>
   );
 };
 

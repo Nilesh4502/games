@@ -22,7 +22,7 @@ import {
   useMediaQuery,
 } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
-import { getFirestore,getDocs,getDoc,doc, collection } from 'firebase/firestore';
+import { getFirestore,getDocs,getDoc,doc, collection,deleteDoc  } from 'firebase/firestore';
 import { app } from '../lib/firebase-config';
 
 function Room() {
@@ -45,53 +45,188 @@ function Room() {
               for (const docSnap of querySnapshot.docs) {
                 const roomData = docSnap.data();
                 const roomId = docSnap.id;
+                console.log(roomId)
           
-                
-                const geoCollectionRef = collection(roomCollectionRef,roomId,'geoDetails');
+                const geoCollectionRef = collection(
+                  db,
+                  "rooms",
+                  roomId,
+                  "geoDetails"
+                );
                 const geoSnapshot = await getDocs(geoCollectionRef);
-                const geoDetails = geoSnapshot.docs.map((geoDoc) => geoDoc.data());
-          
-                let address = [];
-                  if (geoDetails.length > 0) {
-                 const addressCollectionRef = collection(geoCollectionRef, geoDetails[0].id, 'address');
-                 const addressSnapshot = await getDocs(addressCollectionRef);
-                  address = addressSnapshot.docs.map((addressDoc) => addressDoc.data());
-            }
-          
+                const geoDetails = await Promise.all(
+                  geoSnapshot.docs.map(async (geoDoc) => {
+                    const geoData = geoDoc.data();
+                    const geoId = geoDoc.id;
+      
+                    
+                    const addressCollectionRef = collection(
+                      geoCollectionRef,
+                      geoId,
+                      "address"
+                    );
+                    const addressSnapshot = await getDocs(addressCollectionRef);
+                    const addressDocs = addressSnapshot.docs;
+      
+                    const addressPromises = addressDocs.map(async (addressDoc) => {
+                      const addressData = addressDoc.data();
+                      const addressId = addressDoc.id;
+      
+                      
+                      const stateCollectionRef = collection(
+                        addressCollectionRef,
+                        addressId,
+                        "state"
+                      );
+                      const stateSnapshot = await getDocs(stateCollectionRef);
+                      const stateDocs = stateSnapshot.docs;
+                      const states = stateDocs.map((stateDoc) => stateDoc.data());
+      
+                     
+                      const cityCollectionRef = collection(
+                        addressCollectionRef,
+                        addressId,
+                        "city"
+                      );
+                      const citySnapshot = await getDocs(cityCollectionRef);
+                      const cityDocs = citySnapshot.docs;
+                      const cities = cityDocs.map((cityDoc) => cityDoc.data());
+      
+                      
+                      const countryCollectionRef = collection(
+                        addressCollectionRef,
+                        addressId,
+                        "country"
+                      );
+                      const countrySnapshot = await getDocs(countryCollectionRef);
+                      const countryDocs = countrySnapshot.docs;
+                      const countries = countryDocs.map(
+                        (countryDoc) => countryDoc.data()
+                      );
+      
+                      return {
+                        ...addressData,
+                        id: addressId,
+                        states,
+                        cities,
+                        countries,
+                      };
+                    });
+      
+                    const address = await Promise.all(addressPromises);
+      
+                    return {
+                      ...geoData,
+                      id: geoId,
+                      address: address,
+                    };
+                  })
+                );
+                
                 const activationCollectionRef = collection(roomCollectionRef, roomId, 'ActivationDetails');
                 const activationSnapshot = await getDocs(activationCollectionRef);
-                const activationDetails = activationSnapshot.docs.map((activationDoc) => activationDoc.data());
-               let deactivated=[];
-               if(activationDetails.length > 0){
-                const deactivateDocRef =collection(activationCollectionRef,activationDetails[0].id, 'Deactivated');
-                const deactivateSnapshot = await getDocs(deactivateDocRef);
-                const deactivated = deactivateSnapshot.docs.map((deactivationDoc) => deactivationDoc.data());
-               }
+                const activationDetails = await Promise.all(
+                  activationSnapshot.docs.map(async (activationDoc) => {
+                    const activationData = activationDoc.data();
+                    const activationId = activationDoc.id;
+                
+                    const deactivatedCollectionRef = collection(
+                      activationCollectionRef,
+                      activationId,
+                      'deactivated'
+                    );
+                    const deactivatedSnapshot = await getDocs(deactivatedCollectionRef);
+                    const deactivatedDocs = deactivatedSnapshot.docs;
+                    const deactivatedPromises = deactivatedDocs.map(async (deactivatedDoc) => {
+                      const deactivatedData = deactivatedDoc.data();
+                      const deactivatedId = deactivatedDoc.id;
+                
+                      const deactivatedByCollectionRef = collection(
+                        deactivatedCollectionRef,
+                        deactivatedId,
+                        'deactivatedby'
+                      );
+                      const deactivatedBySnapshot = await getDocs(deactivatedByCollectionRef);
+                      const deactivatedByDocs = deactivatedBySnapshot.docs;
+                      const deactivatedBy = deactivatedByDocs.map((deactivatedByDoc) => deactivatedByDoc.data());
+                
+                      const deactivatedTimestampCollectionRef = collection(
+                        deactivatedCollectionRef,
+                        deactivatedId,
+                        'deactivatedtimestamp'
+                      );
+                      const deactivatedTimestampSnapshot = await getDocs(deactivatedTimestampCollectionRef);
+                      const deactivatedTimestampDocs = deactivatedTimestampSnapshot.docs;
+                      const deactivatedTimestamp = deactivatedTimestampDocs.map((deactivatedTimestampDoc) =>
+                        deactivatedTimestampDoc.data()
+                      );
+                
+                      return {
+                        ...deactivatedData,
+                        id: deactivatedId,
+                        deactivatedby: deactivatedBy,
+                        deactivatedtimestamp: deactivatedTimestamp,
+                      };
+                    });
+                
+                    const deactivated = await Promise.all(deactivatedPromises);
+                
+                    return {
+                      ...activationData,
+                      id: activationId,
+                      deactivated: deactivated,
+                    };
+                  })
+                );
+                
                 const roomMetaCollectionRef = collection(roomCollectionRef,roomId, 'roomMeta');
                 const roomMetaSnapshot = await getDocs(roomMetaCollectionRef);
-                const roomMeta = roomMetaSnapshot.docs.map((roomMetaDoc) => roomMetaDoc.data());
+                const roomMetaDetails=await Promise.all(
+                  roomMetaSnapshot.docs.map(async (roomMetaDoc)=>{
+                    const roomMetaData=roomMetaDoc.data();
+                    const roomMetaId=roomMetaDoc.id;
+
+                    return {
+                      ...roomMetaData,
+                      id: roomMetaId
+                    };
+                  })
+                );
           
                 const ownerIdCollectionRef = collection(roomCollectionRef,roomId, 'ownerId');
                 const ownerIdSnapshot = await getDocs(ownerIdCollectionRef);
-                const ownerId = ownerIdSnapshot.docs.map((ownerIdDoc) => ownerIdDoc.data());
+                const ownerIdDetails=await Promise.all(
+                  ownerIdSnapshot.docs.map(async (ownerIdDoc)=>{
+                    const ownerIdData=ownerIdDoc.data();
+                    const ownerIdid=ownerIdDoc.id;
+
+                    return {
+                      ...ownerIdData,
+                      id: ownerIdid
+                    };
+                  })
+                );
           
                 
                 const roomWithSubcollections = {
                   ...roomData,
                   geoDetails,
-                  address,
                   activationDetails,
-                  deactivated,
-                  roomMeta,
-                  ownerId,
+                  roomMetaDetails,
+                  ownerIdDetails,
                 };
           
+                
                 roomsData.push(roomWithSubcollections);
-                console.log("okkk")
+                setData(roomsData);
+               
               }
               
-              setData(roomsData);
+              
+
+              
               console.log(roomsData);
+              
             } catch (error) {
               console.error('Error getting documents:', error);
             }
@@ -141,6 +276,16 @@ function Room() {
   const handleClick = () => {
     // Handle click logic
   };
+
+    const handleDelete = async (roomId) => {
+      try {
+        const docRef = doc(db, 'rooms',roomId);
+        await deleteDoc(docRef);
+        console.log('Document deleted successfully!');
+      } catch (error) {
+        console.error('Error deleting document:', error);
+      }
+    }
 
   return (
     <div>
@@ -192,10 +337,18 @@ function Room() {
                     />
                     <CardBody>
                       <Stack mt="6" spacing="3">
-                        <Heading size="md">{item.type}</Heading>
+                        <Heading size="md">{item.roomname}</Heading>
                         <Text>{item.id}</Text>
-                        <Text>Category: {item.category}</Text>
+                        <Text>Category: {item.room_ctg}</Text>
+                        
+                       <Text>City: {item.geoDetails[0].city}</Text>
+                       <Text>State: {item.geoDetails[0].state}</Text>
+                       <Text>Country: {item.geoDetails[0].country}</Text>
+
+
+
                         <Button onClick={handleClick}>JOIN</Button>
+                        <Button onClick={() => handleDelete(item.roomId)}>Delete</Button>
                       </Stack>
                     </CardBody>
                   </Card>

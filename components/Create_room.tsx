@@ -1,7 +1,7 @@
 import { useState,useEffect, Component } from 'react';
 import { useRouter } from 'next/router';
 import { getFirestore, collection, addDoc, setDoc, doc, serverTimestamp } from 'firebase/firestore';
-import axios from 'axios';
+
 require('dotenv').config();
 import {
   Button,
@@ -33,7 +33,7 @@ function RoomComponent() {
 
   const handleCreateRoom = async () => {
     const State = {
-      id: Roomid,
+      Roomid: Roomid,
       name: name,
       // Add other fields as needed based on your requirements
     };
@@ -41,7 +41,7 @@ function RoomComponent() {
     try {
       
 
-      const roomDocRef = doc(collection(db, 'rooms'), State.id);
+      const roomDocRef = doc(collection(db, 'rooms'));
       const geoDetailsRef = collection(roomDocRef, 'geoDetails');
       const addressRef = doc(geoDetailsRef, 'address');
       const activationRef = collection(roomDocRef, 'ActivationDetails');
@@ -83,10 +83,10 @@ function RoomComponent() {
       await setDoc(roomDocRef, {
         creationDate: serverTimestamp(),
         gifUrl: 'gif',
-        imageUrl: 'https://picsum.photos/id/33/200/300',
+        imageUrl: 'https://picsum.photos/200/300',
         isLive: false,
         room_ctg: 'public',
-        roomId: State.id,
+        roomId: roomDocRef.id,
         roomname: State.name,
       });
 
@@ -156,14 +156,14 @@ function RoomComponent() {
           <ModalHeader>Create Room</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            <FormControl>
+            {/* <FormControl>
               <FormLabel>RoomId</FormLabel>
               <Input
                 value={Roomid}
                 onChange={(e) => setRoomId(e.target.value)}
                 placeholder="Room ID"
               />
-            </FormControl>
+            </FormControl> */}
 
             <FormControl mt={4}>
               <FormLabel>Room Name</FormLabel>
